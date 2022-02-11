@@ -4,6 +4,13 @@
 
 ## Technology Used
 
+- HTML
+- Bulma CSS Framework
+- CSS
+- JavaScript
+- JQuery
+- API's:
+
 ## Authors:
 
 - [Lyndsey Clevesy]()
