@@ -6,9 +6,9 @@
 
 ## Authors:
 
-- [link to Lyndsey Clevesy Github Profile]()
-- [link to Sam Clark Github Profile]()
-- [link to Jacob Ambrose Github Profile](https://github.com/jambrose0)
+- [Lyndsey Clevesy]()
+- [Sam Clark]()
+- [Jacob Ambrose](https://github.com/jambrose0)
 
 ## Project Requirements
 
