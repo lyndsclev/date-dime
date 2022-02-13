@@ -6,7 +6,30 @@ var zipInput = document.querySelector("#zip-input");
 let map;
 let service;
 let infowindow;
- 
+
+var priceLevelHandler = function(price) {
+    if (price == 1) {
+        priceInput.value = "";
+        priceInput.value = 1;
+        console.log(priceInput.value)
+    }
+    else if (price == 2) {
+        priceInput.value = "";
+        priceInput.value = 2;
+        console.log(priceInput.value)
+    }
+    else if (price == 3) {
+        priceInput.value = "";
+        priceInput.value = 3;
+        console.log(priceInput.value)
+    }
+    else if (price == 4) {
+        priceInput.value = "";
+        priceInput.value = 4;
+        console.log(priceInput.value)
+    }
+}
+
 var formSubmitHandler = function(event){
     event.preventDefault();
     var priceLevel = priceInput.value.trim();
@@ -59,7 +82,7 @@ var getCoords = function(priceLevel, zipcode) {
                 .attr('onclick', 'deleteWarning()'));
             }
             else {
-            initMap(dataprice, priceLevel);
+            dataConverter(data, priceLevel);
             zipInput.value = "";
             priceInput.value = "";
             };
@@ -67,12 +90,17 @@ var getCoords = function(priceLevel, zipcode) {
     });
 };
 
-function initMap(data, priceLevel) {
-    var lat = data.lat;
-    var lon = data.lon;
-
-    var location = new google.maps.LatLng(lat, lon);
+var dataConverter = function(data, priceLevel) {
+    var lat = data.lat
+    var lon = data.lon
+    initMap(lat, lon, priceLevel)
     
+}
+
+var initMap = function(lat, lon, priceLevel) {
+    console.log(lat, lon, priceLevel)
+    var location = new google.maps.LatLng(lat, lon);
+    console.log(location)
     map = new google.maps.Map(document.getElementById('map'), {
         center: location,
         zoom: 15
@@ -89,9 +117,9 @@ function initMap(data, priceLevel) {
     function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 1; i < 5; i++) {
-            // console.log(results[i])
-            $(`#${i}`).text(results[i].rating)
-            $(`#${i}`).text(results[i].name)
+            console.log(results[i])
+            // $(`#${i}`).text(results[i].rating)
+            // $(`#${i}`).text(results[i].name)
                 //   createMarker(results[i]);
             }
         }
