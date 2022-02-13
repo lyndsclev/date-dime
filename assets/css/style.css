@@ -1,0 +1,26 @@
+.dollar-btn{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.dollar-btn-hover:hover {
+    border: 4px lime solid;
+    border-radius: 50%;
+}
+
+#price-input {
+    display: none;
+}
+
+.warning {
+    position: fixed;
+    top: 0;
+    opacity: 0.80;
+    width: 100%;
+    text-align: center;
+}

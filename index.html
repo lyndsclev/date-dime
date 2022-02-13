@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Date Dime</title>
   </head>
   <body>
@@ -20,53 +21,60 @@
       <div class="hero-body">
          <!-- Dollar bill divs might need to come out, or be seperated by ids & classes -->
 
-         <div class="level">
+              <form id="search-form" class="level">
+                <div class="level-item">
+                  <div class="columns is-variable is-1">
 
-        
-           <div class="level-item">
-             <div class="columns is-variable is-1">
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('1')">
+                      <figure class="image is-64x64">
+                        <img class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-1.svg">
+                      </figure>
+                    </button>
+                    </div>
 
-               <div class="column">
-                <figure class="image is-64x64">
-                  <img class="is-rounded" src="assets/images/dollar-sign-icon-1.svg">
-                </figure>
-               </div>
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('2')">
+                      <figure class="image is-64x64">
+                        <img class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-2.svg">
+                      </figure>
+                    </button>
+                    </div>
 
-               <div class="column">
-                <figure class="image is-64x64">
-                  <img class="is-rounded" src="assets/images/dollar-sign-icon-2.svg">
-                </figure>
-               </div>
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('3')">
+                      <figure class="image is-64x64">
+                        <img class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-3.svg">
+                      </figure>
+                    </button>
+                    </div>
 
-               <div class="column">
-                <figure class="image is-64x64">
-                  <img class="is-rounded" src="assets/images/dollar-sign-icon-3.svg">
-                </figure>
-               </div>
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('4')">
+                      <figure class="image is-64x64">
+                        <img class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-4.svg">
+                      </figure>
+                    </button>
+                    </div>
 
-               <div class="column">
-                <figure class="image is-64x64">
-                  <img class="is-rounded" src="assets/images/dollar-sign-icon-4.svg">
-                </figure>
-               </div>
+                  </div>
+                </div>
+                
 
-             </div>
-           </div>
-           
+                <div class="level-item">
+                  <input id="zip-input" class="normal input is-medium is-primary is-rounded" type="text" placeholder="Zip Code">
+                </div>
 
-           <div class="level-item">
-            <textarea>Zip Code</textarea>
-           </div>
+                <div class="level-item">
+                  <button type="submit" id="submit-btn" class="button">Search</button>
+                  <button class="button">Clear Search</button>
+                </div>
 
-           <div class="level-item">
-            <button>Search</button>
-            <button>Clear Search</button>
-           </div>
+                <input type="text" id="price-input">
 
-
-         </div>
+              </form>
+        </div>
     
-      
       </div>
     </section>
 
@@ -81,7 +89,7 @@
         <div class="column">
           <div class="card">
             <div class="card-content">
-              <div class="content">
+              <div class="content" id="map">
                 Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
               </div>
             </div>
