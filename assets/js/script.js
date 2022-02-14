@@ -138,29 +138,6 @@ var initMap = function(lat, lon, priceLevel) {
 //   });
 // }
 
-var priceLevelHandler = function(price) {
-    if (price == 1) {
-        priceInput.value = "";
-        priceInput.value = 1;
-        console.log(priceInput.value)
-    }
-    else if (price == 2) {
-        priceInput.value = "";
-        priceInput.value = 2;
-        console.log(priceInput.value)
-    }
-    else if (price == 3) {
-        priceInput.value = "";
-        priceInput.value = 3;
-        console.log(priceInput.value)
-    }
-    else if (price == 4) {
-        priceInput.value = "";
-        priceInput.value = 4;
-        console.log(priceInput.value)
-    }
-}
-
 var deleteWarning = function() {
     $('#warning').remove()
 }
