@@ -12,22 +12,34 @@ var priceLevelHandler = function(price) {
     if (price == 1) {
         priceInput.value = "";
         priceInput.value = 1;
-        console.log(priceInput.value)
+        $("#dollarbtn2").removeClass("dollar-btn-clicked")
+        $("#dollarbtn3").removeClass("dollar-btn-clicked")
+        $("#dollarbtn4").removeClass("dollar-btn-clicked")
+        $("#dollarbtn1").addClass("dollar-btn-clicked")
     }
     else if (price == 2) {
         priceInput.value = "";
         priceInput.value = 2;
-        console.log(priceInput.value)
+        $("#dollarbtn1").removeClass("dollar-btn-clicked")
+        $("#dollarbtn2").removeClass("dollar-btn-clicked")
+        $("#dollarbtn3").removeClass("dollar-btn-clicked")
+        $("#dollarbtn2").addClass("dollar-btn-clicked")
     }
     else if (price == 3) {
         priceInput.value = "";
         priceInput.value = 3;
-        console.log(priceInput.value)
+        $("#dollarbtn1").removeClass("dollar-btn-clicked")
+        $("#dollarbtn2").removeClass("dollar-btn-clicked")
+        $("#dollarbtn4").removeClass("dollar-btn-clicked")
+        $("#dollarbtn3").addClass("dollar-btn-clicked")
     }
     else if (price == 4) {
         priceInput.value = "";
         priceInput.value = 4;
-        console.log(priceInput.value)
+        $("#dollarbtn1").removeClass("dollar-btn-clicked")
+        $("#dollarbtn2").removeClass("dollar-btn-clicked")
+        $("#dollarbtn3").removeClass("dollar-btn-clicked")
+        $("#dollarbtn4").addClass("dollar-btn-clicked")
     };
 };
  

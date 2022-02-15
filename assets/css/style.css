@@ -12,7 +12,12 @@
     border: 4px lime solid;
     border-radius: 50%;
 }
- 
+
+.dollar-btn-clicked {
+    border: 4px lime solid;
+    border-radius: 50%;
+}
+
 #price-input {
     display: none;
 }
