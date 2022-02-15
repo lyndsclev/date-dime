@@ -21,8 +21,8 @@ var priceLevelHandler = function(price) {
         priceInput.value = "";
         priceInput.value = 2;
         $("#dollarbtn1").removeClass("dollar-btn-clicked")
-        $("#dollarbtn2").removeClass("dollar-btn-clicked")
         $("#dollarbtn3").removeClass("dollar-btn-clicked")
+        $("#dollarbtn4").removeClass("dollar-btn-clicked")
         $("#dollarbtn2").addClass("dollar-btn-clicked")
     }
     else if (price == 3) {
