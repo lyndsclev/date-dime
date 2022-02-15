@@ -13,24 +13,24 @@
   </head>
   <body>
     <!-- header -->
-
+ 
     <section class="section">
       <h1 class="title is-2 is-spaced">DATE DIME</h1>
       <h2 class="subtitle">
         Use this text to explain app to user.
       </h2>
     </section>
-
+ 
     <!-- hero= zip code, search button, and price filter  -->
     <section class="hero is-medium is-link">
       <div class="hero-body">
-      
+     
          <!-- Dollar bill divs might need to come out, or be seperated by ids & classes -->
-
+ 
               <form id="search-form" class="level">
                 <div class="level-item">
                   <div class="columns is-mobile is-variable is-1">
-
+ 
                     <div class="column">
                       <button type="button" class="dollar-btn" onclick="priceLevelHandler('1')">
                       <figure class="image is-64x64">
@@ -38,7 +38,7 @@
                       </figure>
                     </button>
                     </div>
-
+ 
                     <div class="column">
                       <button type="button" class="dollar-btn" onclick="priceLevelHandler('2')">
                       <figure class="image is-64x64">
@@ -46,7 +46,7 @@
                       </figure>
                     </button>
                     </div>
-
+ 
                     <div class="column">
                       <button type="button" class="dollar-btn" onclick="priceLevelHandler('3')">
                       <figure class="image is-64x64">
@@ -54,7 +54,7 @@
                       </figure>
                     </button>
                     </div>
-
+ 
                     <div class="column">
                       <button type="button" class="dollar-btn" onclick="priceLevelHandler('4')">
                       <figure class="image is-64x64">
@@ -62,86 +62,87 @@
                       </figure>
                     </button>
                     </div>
-
+ 
                   </div>
                 </div>
-                
-
+               
+ 
                 <div class="level-item">
                   <input id="zip-input" class="normal input is-medium is-primary is-rounded" type="text" placeholder="Zip Code">
                 </div>
-
+ 
                 <div class="level-item">
                   <button type="submit" id="submit-btn" class="button is-success mx-3">SEARCH</button>
                   <button class="button is-success is-light">CLEAR SEARCH</button>
                 </div>
-
+ 
                 <input type="text" id="price-input">
-
+                <input type="text" id="lat-input">
+                <input type="text" id="lng-input">
               </form>
+               
         </div>
-    
+   
       </div>
     </section>
-
+ 
     <!-- Eat Section -->
     <section class="section">
       <h1 class="title has-text-centered is-underlined">EAT</h1>
-  
+ 
       <!-- potentially use BULMA modals in css/js to highlight restuarants/movies they click for more details? -->
-<div id="map"></div>
       <div class="columns">
-
+ 
         <div class="column">
           <div class="card">
             <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+              <div id="map1" class="map content">
+               
               </div>
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+              <div id="map2" class="map content">
+               
               </div>
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+              <div id="map3" class="map content">
+               
               </div>
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+              <div id="map4" class="map content">
+               
               </div>
             </div>
           </div>
         </div>
       </div>
-
+ 
       <!-- This div to remain empty, as it will display restaurants through the search option -->
       <div></div>
     </section>
     <!-- Watch Section -->
     <section class="section">
       <h1 class="title has-text-centered is-underlined">WATCH</h1>
-
+ 
       <div class="columns">
-
+ 
         <div class="column">
           <div class="card">
             <div class="card-content">
@@ -151,7 +152,7 @@
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
@@ -161,7 +162,7 @@
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
@@ -171,7 +172,7 @@
             </div>
           </div>
         </div>
-    
+   
         <div class="column">
           <div class="card">
             <div class="card-content">
@@ -182,20 +183,20 @@
           </div>
         </div>
       </div>
-
+ 
       <!-- This div to remain empty, as it will display movies through the search option -->
       <div></div>
     </section>
-
+ 
     <!-- footer -->
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Date Dime</strong> by frontpage freebirds. 
+          <strong>Date Dime</strong> by frontpage freebirds.
         </p>
       </div>
     </footer>
-
+ 
     <!-- jquery link -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -203,9 +204,12 @@
       crossorigin="anonymous"
     ></script>
     <!-- Google Maps API -->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places" async></script> -->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places">
+</script>
     <!-- our js link -->
     <script src="./assets/js/script.js"></script>
-    
+   
   </body>
 </html>
+
