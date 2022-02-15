@@ -13,8 +13,6 @@
     border-radius: 50%;
 }
  
-#lat-input,
-#lng-input,
 #price-input {
     display: none;
 }
@@ -28,5 +26,9 @@
 }
  
 .map {
-    height: 15em;
+    height:25em;
   }
+ 
+.display-none{
+    display: none;
+}

@@ -1,14 +1,12 @@
-var zipcodeAPI = "3c0ffffa2f1e899bf98403431f25c752";
- 
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
-var latInput = document.querySelector("#lat-input");
-var lngInput = document.querySelector("#lng-input"); 
-
+ 
 var map;
 var geocoder;
 var service;
 var infowindow;
+let response;
+let marker;
  
 var priceLevelHandler = function(price) {
     if (price == 1) {
@@ -40,25 +38,23 @@ var formSubmitHandler = function(event){
     if (priceLevel && zipcode) {
         if (priceLevel == '1'){
             priceLevel = 1;
-            getCoords(zipcode);
             console.log(priceLevel);
         }
         else if (priceLevel == '2') {
             priceLevel = 2;
-            getCoords(zipcode);
             console.log(priceLevel);
         }
         else if (priceLevel == '3') {
             priceLevel = 3;
-            getCoords(zipcode);
             console.log(priceLevel);
         }
         else if (priceLevel == '4') {
             priceLevel = 4;
-            getCoords(zipcode);
             console.log(priceLevel);
         }
-        initMap();
+        $("#eat-info-display").remove();
+        $("#map-display").removeClass("display-none");
+        geocode({ address: zipcode })
     }
     else {
         $("body").append($('<div>')
@@ -72,79 +68,74 @@ var formSubmitHandler = function(event){
     };
 };
  
-var getCoords = function(zipcode) {
-    fetch(`https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode},US&appid=${zipcodeAPI}`)
-    .then(function(response){
-        response.json().then(function(data){
-            if (data.length === 0){
-                zipInput.value = "";
-                priceInput.value = "";
- 
-                $("body").append($('<div>')
-                .addClass('notification is-danger has-text-white warning')
-                .attr('id', 'warning')
-                .text("Please a valid zipcode."));
- 
-                $("#warning").append($('<button>')
-                .addClass('delete')
-                .attr('onclick', 'deleteWarning()'));
-            }
-            else {
-            latInput.value = data.lat;
-            lngInput.value = data.lon;
-            zipInput.value = "";
-            priceInput.value = "";
-            };
-        });
+function initMap() {
+    geocoder = new google.maps.Geocoder();
+    var location = new google.maps.LatLng(-34.397, 150.644);
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: location,
+      zoom: 12
     });
 };
- 
-function initMap() {
-    lat = document.getElementById("lat-input").value;
-    lng = document.getElementById("lng-input").value;
-    var location = new google.maps.LatLng(lat,lng);
-    var priceLevel = document.getElementById("price-input").value;
-    geocoder = new google.maps.Geocoder();
-
-  map = new google.maps.Map(document.getElementById(`map1`), {
-      center: location,
-      zoom: 10
-    });
-  var request = {
-    location: location,
-    radius: '5000',
-    type: ['restaurant'],
-    minPriceLevel: priceLevel,
-    maxPriceLevel: priceLevel+.5,
+function geocode(request) {
+    geocoder
+      .geocode(request)
+      .then((result) => {
+        const { results } = result;
+        var priceLevel = document.getElementById("price-input").value;
+        var ask = {
+                location: results[0].geometry.location,
+                radius: '5000',
+                type: ['restaurant'],
+                minPriceLevel: priceLevel,
+                maxPriceLevel: priceLevel+.5
+              }
+              map.setCenter(results[0].geometry.location);
+              service = new google.maps.places.PlacesService(map);
+              service.nearbySearch(ask, callback);
+        return results;
+      })
+      .catch((e) => {
+       
+        console.log("Geocode was not successful for the following reason: " + e);
+      });
   }
-  service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
-}
 function callback(results, status) {
+       
+    $("#eat-info-container").append($("<div>").addClass("columns").attr("id", "eat-info-display"));
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //   for (var i = 1; i < 5; i++) {
-          console.log(results)
-        //   createMarker(results);
-        //  }
+        for (var i = 1; i < 5; i++) {
+            $("#eat-info-display").append($("<div>").addClass('column').attr("id", `column${i}`));
+ 
+            $(`#column${i}`).append($("<div>").addClass('card').attr("id", `card${i}`));
+            $(`#card${i}`).append($(`<h1>${results[i].name}</h1>`).addClass('card-header-title title').attr("id", `card-title${i}`));
+            $(`#card${i}`).append($("<div>").addClass('card-content').attr("id", `card-content${i}`));
+ 
+            $(`#card-content${i}`).append($("<div>").addClass('').attr("id", `map-info${i}`));
+            console.log(results[i])
+            createMarker(results[i])
+        }      
       }
       else {
-          console.log('failed' +status)
+          console.log('failed ' +status)
       }
   }
-// function createMarker(place) {
-//     if (!place.geometry || !place.geometry.location) return;
- 
-//     const marker = new google.maps.Marker({
-//       map,
-//       position: place.geometry.location,
-//     });
- 
-//     google.maps.event.addListener(marker, "click", () => {
-//       infowindow.setContent(place.name || "");
-//       infowindow.open(map);
-//     });
-//   }
-
+function createMarker(place) {
+    if (!place.geometry || !place.geometry.location) return;
+    const infowindow = new google.maps.InfoWindow({
+        content: place.name,
+      });
+    const marker = new google.maps.Marker({
+      map,
+      position: place.geometry.location,
+    });
+    marker.addListener("click", () => {
+        infowindow.open({
+          anchor: marker,
+          map,
+          shouldFocus: false,
+        });
+      });
+  }
 var deleteWarning = function() {
     $('#warning').remove()
 }

@@ -77,8 +77,6 @@
                 </div>
  
                 <input type="text" id="price-input">
-                <input type="text" id="lat-input">
-                <input type="text" id="lng-input">
               </form>
                
         </div>
@@ -90,49 +88,20 @@
     <section class="section">
       <h1 class="title has-text-centered is-underlined">EAT</h1>
  
-      <!-- potentially use BULMA modals in css/js to highlight restuarants/movies they click for more details? -->
       <div class="columns">
+        <div id="map-display" class="column is-4 is-offset-4 display-none ">
+          <div class="card">
+            <div class="card-content">
+              <div id="map" class="map ">
  
-        <div class="column">
-          <div class="card">
-            <div class="card-content">
-              <div id="map1" class="map content">
-               
-              </div>
-            </div>
-          </div>
-        </div>
-   
-        <div class="column">
-          <div class="card">
-            <div class="card-content">
-              <div id="map2" class="map content">
-               
-              </div>
-            </div>
-          </div>
-        </div>
-   
-        <div class="column">
-          <div class="card">
-            <div class="card-content">
-              <div id="map3" class="map content">
-               
-              </div>
-            </div>
-          </div>
-        </div>
-   
-        <div class="column">
-          <div class="card">
-            <div class="card-content">
-              <div id="map4" class="map content">
-               
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- potentially use BULMA modals in css/js to highlight restuarants/movies they click for more details? -->
+ 
+      <div id="eat-info-container"></div>
  
       <!-- This div to remain empty, as it will display restaurants through the search option -->
       <div></div>
@@ -205,11 +174,10 @@
     ></script>
     <!-- Google Maps API -->
     <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places&callback=initMap">
 </script>
     <!-- our js link -->
     <script src="./assets/js/script.js"></script>
    
   </body>
 </html>
-
