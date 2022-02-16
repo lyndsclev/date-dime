@@ -1,13 +1,27 @@
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
- 
+
+var settings = {
+    "url": "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+    "api-version": "v200",
+    "Authorization": "Basic VU5JVl81Nzo0R0p0YUJKb1daZUs=",
+    "client": "UNIV_57",
+    "x-api-key": "8Po0OSsuF36k4dmk9bwS25zj9wMdprcy1Ts2fUx8",
+    "device-datetime": "2022-02-16T00:27:48Z",
+    "territory": "US",
+    },
+    };
+
 var map;
 var geocoder;
 var service;
 var infowindow;
 let response;
 let marker;
- 
+
 var priceLevelHandler = function(price) {
     if (price == 1) {
         priceInput.value = "";
@@ -64,9 +78,12 @@ var formSubmitHandler = function(event){
             priceLevel = 4;
             console.log(priceLevel);
         }
+
         $("#eat-info-display").remove();
+
         $("#map-display").removeClass("display-none");
-        geocode({ address: zipcode })
+        
+        geocode({ address: zipcode });
     }
     else {
         $('#warning').remove()
@@ -79,7 +96,7 @@ var formSubmitHandler = function(event){
         .addClass('delete')
         .attr('onclick', 'deleteWarning()'));
     };
-};
+};$('#warning').remove()
  
 function initMap() {
     geocoder = new google.maps.Geocoder();
@@ -113,7 +130,6 @@ function geocode(request) {
       });
   }
 function callback(results, status) {
-       
     $("#eat-info-container").append($("<div>").addClass("columns").attr("id", "eat-info-display"));
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 1; i < 5; i++) {
@@ -149,6 +165,11 @@ function createMarker(place) {
         });
       });
   }
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+
 var deleteWarning = function() {
     $('#warning').remove()
 }
