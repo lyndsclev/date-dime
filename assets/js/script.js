@@ -12,34 +12,34 @@ var priceLevelHandler = function(price) {
     if (price == 1) {
         priceInput.value = "";
         priceInput.value = 1;
-        $("#dollarbtn2").removeClass("dollar-btn-clicked")
-        $("#dollarbtn3").removeClass("dollar-btn-clicked")
-        $("#dollarbtn4").removeClass("dollar-btn-clicked")
-        $("#dollarbtn1").addClass("dollar-btn-clicked")
+        $("#dollarbtn2").removeClass("dollar-btn-clicked");
+        $("#dollarbtn3").removeClass("dollar-btn-clicked");
+        $("#dollarbtn4").removeClass("dollar-btn-clicked");
+        $("#dollarbtn1").addClass("dollar-btn-clicked");
     }
     else if (price == 2) {
         priceInput.value = "";
         priceInput.value = 2;
-        $("#dollarbtn1").removeClass("dollar-btn-clicked")
-        $("#dollarbtn3").removeClass("dollar-btn-clicked")
-        $("#dollarbtn4").removeClass("dollar-btn-clicked")
-        $("#dollarbtn2").addClass("dollar-btn-clicked")
+        $("#dollarbtn1").removeClass("dollar-btn-clicked");
+        $("#dollarbtn3").removeClass("dollar-btn-clicked");
+        $("#dollarbtn4").removeClass("dollar-btn-clicked");
+        $("#dollarbtn2").addClass("dollar-btn-clicked");
     }
     else if (price == 3) {
         priceInput.value = "";
         priceInput.value = 3;
-        $("#dollarbtn1").removeClass("dollar-btn-clicked")
-        $("#dollarbtn2").removeClass("dollar-btn-clicked")
-        $("#dollarbtn4").removeClass("dollar-btn-clicked")
-        $("#dollarbtn3").addClass("dollar-btn-clicked")
+        $("#dollarbtn1").removeClass("dollar-btn-clicked");
+        $("#dollarbtn2").removeClass("dollar-btn-clicked");
+        $("#dollarbtn4").removeClass("dollar-btn-clicked");
+        $("#dollarbtn3").addClass("dollar-btn-clicked");
     }
     else if (price == 4) {
         priceInput.value = "";
         priceInput.value = 4;
-        $("#dollarbtn1").removeClass("dollar-btn-clicked")
-        $("#dollarbtn2").removeClass("dollar-btn-clicked")
-        $("#dollarbtn3").removeClass("dollar-btn-clicked")
-        $("#dollarbtn4").addClass("dollar-btn-clicked")
+        $("#dollarbtn1").removeClass("dollar-btn-clicked");
+        $("#dollarbtn2").removeClass("dollar-btn-clicked");
+        $("#dollarbtn3").removeClass("dollar-btn-clicked");
+        $("#dollarbtn4").addClass("dollar-btn-clicked");
     };
 };
  
@@ -69,6 +69,7 @@ var formSubmitHandler = function(event){
         geocode({ address: zipcode })
     }
     else {
+        $('#warning').remove()
         $("body").append($('<div>')
         .addClass('notification is-danger has-text-white warning')
         .attr('id', 'warning')
