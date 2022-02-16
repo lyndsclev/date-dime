@@ -1,19 +1,19 @@
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
 
-var settings = {
-    "url": "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
-    "method": "GET",
-    "timeout": 0,
-    "headers": {
-    "api-version": "v200",
-    "Authorization": "Basic VU5JVl81Nzo0R0p0YUJKb1daZUs=",
-    "client": "UNIV_57",
-    "x-api-key": "8Po0OSsuF36k4dmk9bwS25zj9wMdprcy1Ts2fUx8",
-    "device-datetime": "2022-02-16T00:27:48Z",
-    "territory": "US",
-    },
-    };
+// var settings = {
+//     "url": "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
+//     "method": "GET",
+//     "timeout": 0,
+//     "headers": {
+//     "api-version": "v200",
+//     "Authorization": "Basic VU5JVl81Nzo0R0p0YUJKb1daZUs=",
+//     "client": "UNIV_57",
+//     "x-api-key": "8Po0OSsuF36k4dmk9bwS25zj9wMdprcy1Ts2fUx8",
+//     "device-datetime": "2022-02-16T00:27:48Z",
+//     "territory": "US",
+//     },
+//     };
 
 var map;
 var geocoder;
@@ -78,15 +78,16 @@ var formSubmitHandler = function(event){
             priceLevel = 4;
             console.log(priceLevel);
         }
+        $('#warning').remove();
 
         $("#eat-info-display").remove();
 
         $("#map-display").removeClass("display-none");
-        
+
         geocode({ address: zipcode });
     }
     else {
-        $('#warning').remove()
+        $('#warning').remove();
         $("body").append($('<div>')
         .addClass('notification is-danger has-text-white warning')
         .attr('id', 'warning')
@@ -96,7 +97,7 @@ var formSubmitHandler = function(event){
         .addClass('delete')
         .attr('onclick', 'deleteWarning()'));
     };
-};$('#warning').remove()
+};
  
 function initMap() {
     geocoder = new google.maps.Geocoder();
@@ -125,10 +126,18 @@ function geocode(request) {
         return results;
       })
       .catch((e) => {
-       
+        $('#warning').remove()
+        $("body").append($('<div>')
+        .addClass('notification is-danger has-text-white warning')
+        .attr('id', 'warning')
+        .text(`Failed because of this issue: ${e}`));
+ 
+        $("#warning").append($('<button>')
+        .addClass('delete')
+        .attr('onclick', 'deleteWarning()'));
         console.log("Geocode was not successful for the following reason: " + e);
       });
-  }
+  };
 function callback(results, status) {
     $("#eat-info-container").append($("<div>").addClass("columns").attr("id", "eat-info-display"));
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -136,8 +145,20 @@ function callback(results, status) {
             $("#eat-info-display").append($("<div>").addClass('column').attr("id", `column${i}`));
  
             $(`#column${i}`).append($("<div>").addClass('card').attr("id", `card${i}`));
-            $(`#card${i}`).append($(`<h1>${results[i].name}</h1>`).addClass('card-header-title title').attr("id", `card-title${i}`));
-            $(`#card${i}`).append($("<div>").addClass('card-content').attr("id", `card-content${i}`));
+
+            $(`#card${i}`).append($(`<div>${results[i].name}</div>`).addClass('title is-3 is-spaced ').attr("id", `card-title${i}`));
+            
+            $(`#card${i}`).append($(`<div>Rating: <br> ${results[i].rating}</div>`).addClass('card-content subtitle is-4').attr
+            ("id", `card-content-rating${i}`));
+            
+            if (results[i].opening_hours.isOpen.open_now) {
+                $(`#card${i}`).append($(`<div>Open</div>`).addClass('card-content subtitle is-4 open').attr("id", `card-content-rating${i}`));
+            }
+            else {
+                $(`#card${i}`).append($(`<div>Closed</div>`).addClass('card-content subtitle is-4 closed').attr("id", `card-content-rating${i}`));
+            };
+
+            $(`#card${i}`).append($(`<div>Address: <br> ${results[i].vicinity}</div>`).addClass('card-content subtitle is-4 ').attr("id", `card-content-address${i}`));
  
             $(`#card-content${i}`).append($("<div>").addClass('').attr("id", `map-info${i}`));
             console.log(results[i])
@@ -145,7 +166,16 @@ function callback(results, status) {
         }      
       }
       else {
-          console.log('failed ' +status)
+        $('#warning').remove()
+        $("body").append($('<div>')
+        .addClass('notification is-danger has-text-white warning')
+        .attr('id', 'warning')
+        .text(`Failed because of this issue: ${status}`));
+ 
+        $("#warning").append($('<button>')
+        .addClass('delete')
+        .attr('onclick', 'deleteWarning()'));  
+        console.log('failed: ' + status)
       }
   }
 function createMarker(place) {
@@ -166,9 +196,9 @@ function createMarker(place) {
       });
   }
 
-$.ajax(settings).done(function (response) {
-    console.log(response);
-});
+// $.ajax(settings).done(function (response) {
+//     console.log(response);
+// });
 
 var deleteWarning = function() {
     $('#warning').remove()
