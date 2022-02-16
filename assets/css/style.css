@@ -42,7 +42,7 @@
 .card{
     background-color: gainsboro;
     opacity: 0.87;
-    /* color: var(--secondary); */
+    height: 100%;
     border: 2px black solid;
     padding: 10px;
 }

@@ -80,6 +80,8 @@ var formSubmitHandler = function(event){
         }
         $('#warning').remove();
 
+        // $("#eat-title").text("");
+
         $("#eat-info-display").remove();
 
         $("#map-display").removeClass("display-none");
@@ -140,6 +142,7 @@ function geocode(request) {
   };
 function callback(results, status) {
     $("#eat-info-container").append($("<div>").addClass("columns").attr("id", "eat-info-display"));
+    $("#eat-title").text("EAT");
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 1; i < 5; i++) {
             $("#eat-info-display").append($("<div>").addClass('column').attr("id", `column${i}`));
