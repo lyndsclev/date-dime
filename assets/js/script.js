@@ -6,12 +6,12 @@ var settings = {
   timeout: 0,
   headers: {
     "api-version": "v200",
-    Authorization: "Basic VU5JVl81Nzo0R0p0YUJKb1daZUs=",
-    client: "UNIV_57",
-    "x-api-key": "8Po0OSsuF36k4dmk9bwS25zj9wMdprcy1Ts2fUx8",
+    authorization: "Basic VUVXRV9YWDpUWGZQdlZQcm54cHI=",
+    client: "UEWE",
+    "x-api-key": "O5euYdhuQs7XkoBGOIZei83Ij93uFkrs1uhe3EJf",
     "device-datetime": "2022-02-16T00:27:48Z",
     territory: "US",
-    // geolocation: zipInput.value.trim(),
+    // geolocation: "-22.0;14.0",
   },
 };
 var map;
@@ -124,44 +124,25 @@ function geocode(request) {
     });
 }
 
-function showtime(request) {
-  fetch(settings)
-    .then(function (response) {
-      if (200 !== response.status) {
-        console.log("Something's not right. Status:" + response.status);
-      }
-      return response.json();
-    })
-    .then(function (response) {
-      $("#movie-info-container").append(
-        $("<div>").addClass("columns").attr("id", "movie-info-display")
-      );
-      if (settings === true) {
-        for (let i = 0; i < 5; i++) {
-          $("movie-info-display").append(
-            $("<div>").addClass("column").attr("id", `column${i}`)
-          );
-
-          $(`#column${i}`).append(
-            $("<div>").addClass("card").attr("id", `card${i}`)
-          );
-
-          $(`card${i}`).append(
-            $(`<h1>${films.film_name[i]}</h1>`)
-              .addClass("card-header-title title")
-              .attr("id", `card-title${i}`)
-          );
-          $(`#card${i}`).append(
-            $("<div>").addClass("card-content").attr("id", `card-content${i}`)
-          );
-
-          $(`#card-content${i}`).append(
-            $("<div>").addClass("").attr("id", `map-info${i}`)
-          );
-        }
-      }
-    });
-}
+// function showtime(request) {
+//   fetch(settings).then(
+//     function (response) {
+//       if (200 !== response.status) {
+//         console.log("Something's not right. Status:" + response.status);
+//       }
+//       return response.json();
+//     }.then(function (response) {
+//       console.log(response.films[0].film_name);
+//         $("#movie-info-container").append(
+//           $("<div>").addClass("columns").attr("id", "movie-info-display")
+//         );
+//         $(response);
+//         for(let i = 0; i<= 4; i++) {
+//             $('movie-info-display').append($(''))
+//          }
+//     })
+//   );
+// }
 
 function callback(results, status) {
   $("#eat-info-container").append(
@@ -213,10 +194,40 @@ function createMarker(place) {
   });
 }
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+function showtime() {
+  $.ajax(settings).done(function (response) {
+    // console.log(response);
+    console.log(response.films[0].film_name);
+    console.log(response.films[1].film_name);
+    console.log(response.films[2].film_name);
+    console.log(response.films[3].film_name);
+    $("#movie-info-container").append(
+      $("<div>").addClass("columns").attr("id", "movie-info-display")
+    );
+    for (let i = 0; i <= 3; i++) {
+      $("movie-info-display").append(
+        $("<div>").addClass("column").attr("id", `column${i}`)
+      );
 
+      $(`#column${i}`).append(
+        $("<div>").addClass("card").attr("id", `card${i}`)
+      );
+
+      $(`card${i}`).append(
+        $(`<h1>${response.films[i].film_name}</h1>`)
+          .addClass("card-header-title title")
+          .attr("id", `card-title${i}`)
+      );
+      $(`#card${i}`).append(
+        $("<div>").addClass("card-content").attr("id", `card-content${i}`)
+      );
+
+      $(`#card-content${i}`).append(
+        $("<div>").addClass("").attr("id", `map-info${i}`)
+      );
+    }
+  });
+}
 var deleteWarning = function () {
   $("#warning").remove();
 };
