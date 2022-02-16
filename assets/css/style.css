@@ -2,7 +2,7 @@
     --primary: #485fc7;
     --secondary: #48c78e;
 }
-
+ 
 .dollar-btn{
     background: none;
     color: inherit;
@@ -17,12 +17,12 @@
     border: 4px var(--secondary) solid;
     border-radius: 50%;
 }
-
+ 
 .dollar-btn-clicked {
     border: 4px var(--secondary) solid;
     border-radius: 50%;
 }
-
+ 
 #price-input {
     display: none;
 }
@@ -38,7 +38,7 @@
 .map {
     height:25em;
   }
-
+ 
 .card{
     background-color: gainsboro;
     opacity: 0.87;
@@ -46,15 +46,15 @@
     border: 2px black solid;
     padding: 10px;
 }
-
+ 
 .display-none{
     display: none;
 }
-
+ 
 .open {
     color: var(--secondary);
 }
-
+ 
 .closed {
     color: red;
 }

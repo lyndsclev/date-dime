@@ -1,6 +1,6 @@
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
-
+var index = 0;
 // var settings = {
 //     "url": "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
 //     "method": "GET",
@@ -14,14 +14,14 @@ var zipInput = document.querySelector("#zip-input");
 //     "territory": "US",
 //     },
 //     };
-
+ 
 var map;
 var geocoder;
 var service;
 var infowindow;
 let response;
 let marker;
-
+ 
 var priceLevelHandler = function(price) {
     if (price == 1) {
         priceInput.value = "";
@@ -64,28 +64,22 @@ var formSubmitHandler = function(event){
     if (priceLevel && zipcode) {
         if (priceLevel == '1'){
             priceLevel = 1;
-            console.log(priceLevel);
         }
         else if (priceLevel == '2') {
             priceLevel = 2;
-            console.log(priceLevel);
         }
         else if (priceLevel == '3') {
             priceLevel = 3;
-            console.log(priceLevel);
         }
         else if (priceLevel == '4') {
             priceLevel = 4;
-            console.log(priceLevel);
         }
         $('#warning').remove();
-
-        // $("#eat-title").text("");
-
+ 
         $("#eat-info-display").remove();
-
+ 
         $("#map-display").removeClass("display-none");
-
+ 
         geocode({ address: zipcode });
     }
     else {
@@ -109,6 +103,7 @@ function initMap() {
       zoom: 12
     });
 };
+ 
 function geocode(request) {
     geocoder
       .geocode(request)
@@ -141,32 +136,26 @@ function geocode(request) {
       });
   };
 function callback(results, status) {
+    var services2 = new google.maps.places.PlacesService(map);
     $("#eat-info-container").append($("<div>").addClass("columns").attr("id", "eat-info-display"));
     $("#eat-title").text("EAT");
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 1; i < 5; i++) {
-            $("#eat-info-display").append($("<div>").addClass('column').attr("id", `column${i}`));
+           
+            $("#eat-info-display").append($("<div>").addClass('column').attr("id", `eat-column${i}`));
  
-            $(`#column${i}`).append($("<div>").addClass('card').attr("id", `card${i}`));
-
-            $(`#card${i}`).append($(`<div>${results[i].name}</div>`).addClass('title is-3 is-spaced ').attr("id", `card-title${i}`));
-            
-            $(`#card${i}`).append($(`<div>Rating: <br> ${results[i].rating}</div>`).addClass('card-content subtitle is-4').attr
-            ("id", `card-content-rating${i}`));
-            
-            if (results[i].opening_hours.isOpen.open_now) {
-                $(`#card${i}`).append($(`<div>Open</div>`).addClass('card-content subtitle is-4 open').attr("id", `card-content-rating${i}`));
-            }
-            else {
-                $(`#card${i}`).append($(`<div>Closed</div>`).addClass('card-content subtitle is-4 closed').attr("id", `card-content-rating${i}`));
+            $(`#eat-column${i}`).append($("<div>").addClass('card').attr("id", `eat-card${i}`));
+ 
+            var placeDetails = {
+                placeId: `${results[i].place_id}`,
+                fields: ['name', 'rating', 'opening_hours','utc_offset_minutes', 'formatted_address', 'website', 'photos', 'geometry']
             };
-
-            $(`#card${i}`).append($(`<div>Address: <br> ${results[i].vicinity}</div>`).addClass('card-content subtitle is-4 ').attr("id", `card-content-address${i}`));
  
-            $(`#card-content${i}`).append($("<div>").addClass('').attr("id", `map-info${i}`));
+            var services2 = new google.maps.places.PlacesService(map);
+            services2.getDetails(placeDetails, getDetails);
+ 
             console.log(results[i])
-            createMarker(results[i])
-        }      
+        };  
       }
       else {
         $('#warning').remove()
@@ -179,30 +168,61 @@ function callback(results, status) {
         .addClass('delete')
         .attr('onclick', 'deleteWarning()'));  
         console.log('failed: ' + status)
-      }
-  }
+      };
+  };
+ 
+var getDetails = function(placeDetails) {
+    index++
+    console.log(index)
+    console.log(placeDetails)
+    $(`#eat-card${index}`).append($(`<div>${placeDetails.name}</div>`).addClass('title is-3 is-spaced '));
+           
+    $(`#eat-card${index}`).append($(`<div>Rating: <br> ${placeDetails.rating}</div>`).addClass('card-content subtitle is-4'));
+   
+    if (placeDetails.opening_hours.isOpen()) {
+        $(`#eat-card${index}`).append($(`<div>Open</div>`).addClass('card-content subtitle is-4 open'));
+    }
+    else {
+        $(`#eat-card${index}`).append($(`<div>Closed</div>`).addClass('card-content subtitle is-4 closed'));
+    };
+ 
+    $(`#eat-card${index}`).append($(`<div>Address: <br> ${placeDetails.formatted_address}</div>`).addClass('card-content subtitle is-4 '));
+ 
+    createMarker(placeDetails)
+ 
+    if (index == 4) {
+        index = 0
+    };
+};
+ 
 function createMarker(place) {
+    var contentString = `
+    <div style="display: flex;">
+    ${place?.photos? `<img class="image is-128x128" src=${place.photos[0].getUrl()} alt=${place.name} />`: ''}
+      <div><a href=${place.url} target="_blank" rel="noreferrer">${place.name}</a></div>
+    </div>`;
+    
     if (!place.geometry || !place.geometry.location) return;
     const infowindow = new google.maps.InfoWindow({
-        content: place.name,
-      });
+        content: contentString,
+        });
     const marker = new google.maps.Marker({
-      map,
-      position: place.geometry.location,
+        map,
+        position: place.geometry.location,
     });
     marker.addListener("click", () => {
         infowindow.open({
-          anchor: marker,
-          map,
-          shouldFocus: false,
+            anchor: marker,
+            map,
+            shouldFocus: false,
         });
-      });
-  }
-
+    });
+};
+ 
 // $.ajax(settings).done(function (response) {
 //     console.log(response);
 // });
-
+ 
 var deleteWarning = function() {
     $('#warning').remove()
 }
