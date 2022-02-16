@@ -196,7 +196,7 @@ function createMarker(place) {
 
 function showtime() {
   $.ajax(settings).done(function (response) {
-    // console.log(response);
+    console.log(response);
     console.log(response.films[0].film_name);
     console.log(response.films[1].film_name);
     console.log(response.films[2].film_name);
@@ -205,7 +205,7 @@ function showtime() {
       $("<div>").addClass("columns").attr("id", "movie-info-display")
     );
     for (let i = 0; i <= 3; i++) {
-      $("movie-info-display").append(
+      $("#movie-info-display").append(
         $("<div>").addClass("column").attr("id", `column${i}`)
       );
 
@@ -213,11 +213,18 @@ function showtime() {
         $("<div>").addClass("card").attr("id", `card${i}`)
       );
 
-      $(`card${i}`).append(
-        $(`<h1>${response.films[i].film_name}</h1>`)
+      $(`#card${i}`).append(
+        $(`<h2>${response.films[i].film_name}</h2>`)
           .addClass("card-header-title title")
           .attr("id", `card-title${i}`)
       );
+
+      //   $(`#card${i}`).append(
+      //     $(`<img>${response.films[i].images.poster.medium.fim_image}</img>`)
+      //       .addClass("card-header-title title")
+      //       .attr("id", `card-title${i}`)
+      //   );
+
       $(`#card${i}`).append(
         $("<div>").addClass("card-content").attr("id", `card-content${i}`)
       );
