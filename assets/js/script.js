@@ -1,17 +1,17 @@
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
+
 var settings = {
   url: "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
   method: "GET",
   timeout: 0,
   headers: {
     "api-version": "v200",
-    authorization: "Basic VUVXRV9YWDpUWGZQdlZQcm54cHI=",
+    authorization: "Basic VUVXRTowY2hxdDRpbkR5cEY=",
     client: "UEWE",
-    "x-api-key": "O5euYdhuQs7XkoBGOIZei83Ij93uFkrs1uhe3EJf",
+    "x-api-key": "7hYBXQrI6f8cCfHCVigan280pdq6gZrda14Hvv6N",
     "device-datetime": "2022-02-16T00:27:48Z",
     territory: "US",
-    // geolocation: "-22.0;14.0",
   },
 };
 var map;
@@ -124,26 +124,6 @@ function geocode(request) {
     });
 }
 
-// function showtime(request) {
-//   fetch(settings).then(
-//     function (response) {
-//       if (200 !== response.status) {
-//         console.log("Something's not right. Status:" + response.status);
-//       }
-//       return response.json();
-//     }.then(function (response) {
-//       console.log(response.films[0].film_name);
-//         $("#movie-info-container").append(
-//           $("<div>").addClass("columns").attr("id", "movie-info-display")
-//         );
-//         $(response);
-//         for(let i = 0; i<= 4; i++) {
-//             $('movie-info-display').append($(''))
-//          }
-//     })
-//   );
-// }
-
 function callback(results, status) {
   $("#eat-info-container").append(
     $("<div>").addClass("columns").attr("id", "eat-info-display")
@@ -197,10 +177,7 @@ function createMarker(place) {
 function showtime() {
   $.ajax(settings).done(function (response) {
     console.log(response);
-    console.log(response.films[0].film_name);
-    console.log(response.films[1].film_name);
-    console.log(response.films[2].film_name);
-    console.log(response.films[3].film_name);
+    $("#movie-info-display").empty();
     $("#movie-info-container").append(
       $("<div>").addClass("columns").attr("id", "movie-info-display")
     );
@@ -219,12 +196,6 @@ function showtime() {
           .attr("id", `card-title${i}`)
       );
 
-      //   $(`#card${i}`).append(
-      //     $(`<img>${response.films[i].images.poster.medium.fim_image}</img>`)
-      //       .addClass("card-header-title title")
-      //       .attr("id", `card-title${i}`)
-      //   );
-
       $(`#card${i}`).append(
         $("<div>").addClass("card-content").attr("id", `card-content${i}`)
       );
@@ -235,6 +206,7 @@ function showtime() {
     }
   });
 }
+
 var deleteWarning = function () {
   $("#warning").remove();
 };
