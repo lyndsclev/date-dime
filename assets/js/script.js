@@ -1,3 +1,6 @@
+// define storage input array 
+var storeInputArr; 
+
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
 
@@ -293,5 +296,31 @@ function showtime() {
 var deleteWarning = function () {
   $("#warning").remove();
 };
+
+// storage input function 
+function storeInput () {
+
+    // declare values 
+    var dime = priceInput.value;
+    var zip = zipInput.value; 
+
+    // get existing stored input or if none set array to empty 
+    storeInputArr = JSON.parse(window.localStorage.getItem("storeInputArr")) || [];
+
+    // create object with input to push to arr 
+    var newInput = {
+        dime: dime, 
+        zip: zip
+    };
+
+    storeInputArr.push(newInput);
+
+    // save to local storage 
+    window.localStorage.setItem("storeInputArr", JSON.stringify(storeInputArr));
+
+};
+
+// run storeInput function 
+$("#search-form").on("submit", storeInput);
 
 $("#search-form").on("submit", formSubmitHandler);
