@@ -5,8 +5,7 @@ var savedSearchEl = document.querySelector("#savedSearchEl");
 
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
-
-var index = 0;
+ 
 var settings = {
   url: "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
   method: "GET",
@@ -20,14 +19,16 @@ var settings = {
     "territory": "XX",
   },
 };
-
+ 
 var map;
 var geocoder;
 var service;
 var infowindow;
-let response;
-let marker;
-
+var response;
+var marker;
+var markersArray = [];
+var index = 0;
+ 
 var priceLevelHandler = function (price) {
   if (price == 1) {
     priceInput.value = "";
@@ -59,7 +60,7 @@ var priceLevelHandler = function (price) {
     $("#dollarbtn4").addClass("dollar-btn-clicked");
   }
 };
-
+ 
 var formSubmitHandler = function (event) {
   event.preventDefault();
   var priceLevel = priceInput.value.trim();
@@ -75,13 +76,14 @@ var formSubmitHandler = function (event) {
       priceLevel = 4;
     }
     $("#warning").remove();
-
+ 
     $("#eat-info-display").remove();
-
+ 
     $("#map-display").removeClass("display-none");
-
+ 
     geocode({ address: zipcode });
     showtime();
+ 
   } else {
     $("#warning").remove();
     $("body").append(
@@ -90,13 +92,13 @@ var formSubmitHandler = function (event) {
         .attr("id", "warning")
         .text("Please select price range and enter zipe code.")
     );
-
+ 
     $("#warning").append(
       $("<button>").addClass("delete").attr("onclick", "deleteWarning()")
     );
   }
 };
-
+ 
 function initMap() {
   geocoder = new google.maps.Geocoder();
   var location = new google.maps.LatLng(-34.397, 150.644);
@@ -104,8 +106,8 @@ function initMap() {
     center: location,
     zoom: 12,
   });
-}
-
+};
+ 
 function geocode(request) {
   geocoder
     .geocode(request)
@@ -132,13 +134,14 @@ function geocode(request) {
           .attr("id", "warning")
           .text(`Failed because of this issue: ${e}`)
       );
-
+ 
       $("#warning").append(
         $("<button>").addClass("delete").attr("onclick", "deleteWarning()")
       );
       console.log("Geocode was not successful for the following reason: " + e);
     });
-}
+};
+ 
 function callback(results, status) {
   var services2 = new google.maps.places.PlacesService(map);
   $("#eat-info-container").append(
@@ -147,14 +150,7 @@ function callback(results, status) {
   $("#eat-title").text("EAT");
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 1; i < 5; i++) {
-      $("#eat-info-display").append(
-        $("<div>").addClass("column").attr("id", `eat-column${i}`)
-      );
-
-      $(`#eat-column${i}`).append(
-        $("<div>").addClass("card").attr("id", `eat-card${i}`)
-      );
-
+     
       var placeDetails = {
         placeId: `${results[i].place_id}`,
         fields: [
@@ -166,11 +162,13 @@ function callback(results, status) {
           "website",
           "photos",
           "geometry",
-        ],
+          "price_level"
+        ]
       };
       var services2 = new google.maps.places.PlacesService(map);
       services2.getDetails(placeDetails, getDetails);
-    }
+    };
+ 
   } else {
     $("#warning").remove();
     $("body").append(
@@ -179,28 +177,34 @@ function callback(results, status) {
         .attr("id", "warning")
         .text(`Failed because of this issue: ${status}`)
     );
-
+ 
     $("#warning").append(
       $("<button>").addClass("delete").attr("onclick", "deleteWarning()")
     );
     console.log("failed: " + status);
-  }
-}
-
+  };
+};
+ 
 var getDetails = function (placeDetails) {
   index++;
-  console.log(index);
-  console.log(placeDetails);
+ 
+  $("#eat-info-display").append(
+    $("<div>").addClass("column").attr("id", `eat-column${index}`)
+  );
+ 
+  $(`#eat-column${index}`).append(
+    $("<div>").addClass("card").attr("id", `eat-card${index}`)
+  );
+ 
   $(`#eat-card${index}`).append(
     $(`<div>${placeDetails.name}</div>`).addClass("title is-3 is-spaced ")
   );
-
+ 
   $(`#eat-card${index}`).append(
     $(`<div>Rating: <br> ${placeDetails.rating}</div>`).addClass(
-      "card-content subtitle is-4"
-    )
+      "card-content subtitle is-4")
   );
-
+ 
   if (placeDetails.opening_hours.isOpen()) {
     $(`#eat-card${index}`).append(
       $(`<div>Open</div>`).addClass("card-content subtitle is-4 open")
@@ -209,23 +213,27 @@ var getDetails = function (placeDetails) {
     $(`#eat-card${index}`).append(
       $(`<div>Closed</div>`).addClass("card-content subtitle is-4 closed")
     );
-  }
-
+  };
+ 
   $(`#eat-card${index}`).append(
     $(`<div>Address: <br> ${placeDetails.formatted_address}</div>`).addClass(
       "card-content subtitle is-4 "
     )
   );
-
+ 
   createMarker(placeDetails);
-
+ 
   if (index == 4) {
     index = 0;
-  }
+  };
 };
-
+ 
 function createMarker(place) {
-  var contentString = `
+    if (markersArray.length > 3) {
+        setMapOnAll(null)
+    };
+ 
+    var contentString = `
     <div style="display: flex;">
     ${
       place?.photos
@@ -234,20 +242,24 @@ function createMarker(place) {
           } />`
         : ""
     }
-      <div><a href=${place.url} target="_blank" rel="noreferrer">${
+      <div><a href=${place.website} target="_blank" rel="noreferrer">${
     place.name
   }</a></div>
     </div>`;
-
+ 
   if (!place.geometry || !place.geometry.location) return;
+ 
   const infowindow = new google.maps.InfoWindow({
     content: contentString,
   });
-
+ 
   const marker = new google.maps.Marker({
     map,
     position: place.geometry.location,
   });
+ 
+  markersArray.push(marker);
+ 
   marker.addListener("click", () => {
     infowindow.open({
       anchor: marker,
@@ -256,7 +268,14 @@ function createMarker(place) {
     });
   });
 };
-
+ 
+function setMapOnAll(map) {
+    for (let i = 0; i < markersArray.length; i++) {
+      markersArray[i].setMap(map);
+    };
+    markersArray = [];
+  };
+ 
 function showtime() {
   $.ajax(settings).done(function (response) {
     $("#watch-title").text("WATCH");
@@ -270,23 +289,23 @@ function showtime() {
       $("#movie-info-display").append(
         $("<div>").addClass("column").attr("id", `column${i}`)
       );
-
+ 
       $(`#column${i}`).append(
         $("<div>").addClass("card").attr("id", `card${i}`)
       );
-
+ 
       $(`#card${i}`).append(
         $(`<h2>${response.films[i].film_name}</h2>`)
           .addClass("card-header-title title")
           .attr("id", `card-title${i}`)
       );
-
+ 
         $(`#card${i}`).append(
           $(`<img src=${response.films[i].images.poster[1].medium.film_image}></img>`)
             .addClass("card-header-title title")
             .attr("id", `card-title${i}`)
         );
-
+ 
       $(`#card${i}`).append(
         $("<div>").addClass("card-content")
         .attr("id", `card-content${i}`)
@@ -294,11 +313,10 @@ function showtime() {
     };
   });
 };
-
+ 
 var deleteWarning = function () {
   $("#warning").remove();
 };
-
 
 function storeInput () {
 
@@ -321,7 +339,7 @@ function storeInput () {
 // launch saved search modal
 
 function launchSavedModal () {
-
+    $("li").remove()
     // activate modal 
     $("#saveModal").addClass("is-active");
     
@@ -334,7 +352,6 @@ function launchSavedModal () {
         savedSearchItem.textContent =  "Your Dime Level: " + storeInputArr[i].dime + " You're Zip: " + storeInputArr[i].zip;
         savedSearchEl.appendChild(savedSearchItem);
         }
-
 };
 
 function closeSavedModal () {
