@@ -1,23 +1,28 @@
 # Date Dime
 
+Date Dime is a quick and easy way to find a restaurant that fits your budget and what's in theaters!
+
 ## Details
+
+- Here's a quick link to try it yourself:
+  https://lyndsclev.github.io/date-dime/
 
 ## Technology Used
 
 - HTML
-- Bulma CSS Framework
+- Bulma
 - CSS
 - JavaScript
 - JQuery
-- API's:
+- API's: MovieGlu, GoogleMaps
 
 ## Authors:
 
-- [Lyndsey Clevesy]()
-- [Sam Clark]()
+- [Lyndsey Clevesy](https://github.com/lyndsclev)
+- [Sam Clark](https://github.com/Sam-Clark1)
 - [Jacob Ambrose](https://github.com/jambrose0)
 
 ## Project Requirements
 
 - To be removed before project submission
-  ![Screenshot](/assets/images/pr-requirements.png)
+  ![Screenshot](/assets/images/example-screencap.png)

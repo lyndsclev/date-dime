@@ -176,12 +176,18 @@ function createMarker(place) {
 
 function showtime() {
   $.ajax(settings).done(function (response) {
-    console.log(response);
     $("#movie-info-display").empty();
     $("#movie-info-container").append(
-      $("<div>").addClass("columns").attr("id", "movie-info-display")
+      $("<div>")
+        .addClass("columns", "is-centered")
+        .attr("id", "movie-info-display")
     );
     for (let i = 0; i <= 3; i++) {
+      //   console.log(response.films[i].film_id);
+      //   let posterEl = response.films[i].film_id;
+      //   let posters = `https://api-gate2.movieglu.com/images/?film_id=266617/`;
+      //   console.log(posters);
+
       $("#movie-info-display").append(
         $("<div>").addClass("column").attr("id", `column${i}`)
       );
@@ -196,12 +202,14 @@ function showtime() {
           .attr("id", `card-title${i}`)
       );
 
+      //   $(`#card${i}`).append(
+      //     $(`<img src=${posters}></img>`)
+      //       .addClass("card-header-title title")
+      //       .attr("id", `card-title${i}`)
+      //   );
+
       $(`#card${i}`).append(
         $("<div>").addClass("card-content").attr("id", `card-content${i}`)
-      );
-
-      $(`#card-content${i}`).append(
-        $("<div>").addClass("").attr("id", `map-info${i}`)
       );
     }
   });
