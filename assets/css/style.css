@@ -26,6 +26,15 @@
 #price-input {
   display: none;
 }
+
+.warning {
+  position: fixed;
+  top: 0;
+  opacity: 0.80;
+  width: 100%;
+  text-align: center;
+}
+
 .map {
   height: 25em;
 }

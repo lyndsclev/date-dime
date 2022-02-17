@@ -76,6 +76,7 @@ var formSubmitHandler = function (event) {
     $("#map-display").removeClass("display-none");
 
     geocode({ address: zipcode });
+    showtime();
   } else {
     $("#warning").remove();
     $("body").append(
@@ -253,7 +254,7 @@ function createMarker(place) {
 
 function showtime() {
   $.ajax(settings).done(function (response) {
-   console.log(response)
+    $("#watch-title").text("WATCH");
     $("#movie-info-display").empty();
     $("#movie-info-container").append(
       $("<div>")
@@ -294,4 +295,3 @@ var deleteWarning = function () {
 };
 
 $("#search-form").on("submit", formSubmitHandler);
-$("#search-form").on("submit", showtime);
