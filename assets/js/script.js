@@ -251,6 +251,47 @@ function createMarker(place) {
   });
 }
 
+function showtime(response) {
+  $.ajax(settings).done(function (response) {
+    $("#movie-info-display").empty();
+    $("#movie-info-container").append(
+      $("<div>")
+        .addClass("columns", "is-centered")
+        .attr("id", "movie-info-display")
+    );
+    for (let i = 0; i <= 3; i++) {
+      //   console.log(response.films[i].film_id);
+      //   let posterEl = response.films[i].film_id;
+      //   let posters = `https://api-gate2.movieglu.com/images/?film_id=266617/`;
+      //   console.log(posters);
+
+      $("#movie-info-display").append(
+        $("<div>").addClass("column").attr("id", `column${i}`)
+      );
+
+      $(`#column${i}`).append(
+        $("<div>").addClass("card").attr("id", `card${i}`)
+      );
+
+      $(`#card${i}`).append(
+        $(`<h2>${response.films[i].film_name}</h2>`)
+          .addClass("card-header-title title")
+          .attr("id", `card-title${i}`)
+      );
+
+      //   $(`#card${i}`).append(
+      //     $(`<img src=${posters}></img>`)
+      //       .addClass("card-header-title title")
+      //       .attr("id", `card-title${i}`)
+      //   );
+
+      $(`#card${i}`).append(
+        $("<div>").addClass("card-content").attr("id", `card-content${i}`)
+      );
+    }
+  });
+}
+
 var deleteWarning = function () {
   $("#warning").remove();
 };
