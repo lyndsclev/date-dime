@@ -73,7 +73,7 @@
  
                 <div class="level-item">
                   <button type="submit" id="submit-btn" class="button is-success mx-3">SEARCH</button>
-                  <button class="button is-success is-light">CLEAR SEARCH</button>
+                  <button id="showSaveBtn" class="button is-success is-light">SHOW SAVED SEARCH</button>
                 </div>
  
                 <input type="text" id="price-input">
@@ -83,6 +83,23 @@
    
       </div>
     </section>
+
+    <!-- Previous Search Modal -->
+    <div id="saveModal" class = "modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Your Previous Search</p>
+          <button id="sDelBtn" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <ul id="savedSearchEl"></ul>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+      </div>
+    </div>
+
     <!-- Eat Section -->
     <section class="section">
       <h1 id="eat-title" class="title has-text-centered is-underlined"></h1>

@@ -1,6 +1,8 @@
 // define storage input array 
 var storeInputArr; 
 
+var savedSearchEl = document.querySelector("#savedSearchEl");
+
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
 
@@ -297,17 +299,14 @@ var deleteWarning = function () {
   $("#warning").remove();
 };
 
-// storage input function 
+
 function storeInput () {
 
-    // declare values 
     var dime = priceInput.value;
     var zip = zipInput.value; 
 
-    // get existing stored input or if none set array to empty 
     storeInputArr = JSON.parse(window.localStorage.getItem("storeInputArr")) || [];
 
-    // create object with input to push to arr 
     var newInput = {
         dime: dime, 
         zip: zip
@@ -315,12 +314,42 @@ function storeInput () {
 
     storeInputArr.push(newInput);
 
-    // save to local storage 
     window.localStorage.setItem("storeInputArr", JSON.stringify(storeInputArr));
+};
+
+
+// launch saved search modal
+
+function launchSavedModal () {
+
+    // activate modal 
+    $("#saveModal").addClass("is-active");
+    
+    // get existing stored
+    storeInputArr = JSON.parse(window.localStorage.getItem("storeInputArr"));
+
+    // populate modal with search 
+    for (var i = 0; i <  storeInputArr.length; i++) {
+        var savedSearchItem = document.createElement("li");
+        savedSearchItem.textContent =  "Your Dime Level: " + storeInputArr[i].dime + " You're Zip: " + storeInputArr[i].zip;
+        savedSearchEl.appendChild(savedSearchItem);
+        }
 
 };
 
+function closeSavedModal () {
+    $("#saveModal").removeClass("is-active");
+};
+
+
+
 // run storeInput function 
 $("#search-form").on("submit", storeInput);
+
+// launch modal 
+$("#showSaveBtn").on("click", launchSavedModal);
+
+// remove modal 
+$("#sDelBtn").on("click", closeSavedModal);
 
 $("#search-form").on("submit", formSubmitHandler);
