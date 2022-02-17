@@ -8,11 +8,11 @@ var settings = {
   timeout: 0,
   headers: {
     "api-version": "v200",
-    Authorization: "Basic VU5JVl81Nzo0R0p0YUJKb1daZUs=",
-    client: "UNIV_57",
-    "x-api-key": "8Po0OSsuF36k4dmk9bwS25zj9wMdprcy1Ts2fUx8",
-    "device-datetime": "2022-02-16T00:27:48Z",
-    territory: "US",
+    "Authorization": "Basic VU5JVl81N19YWDpaemlUUk80NHBqTjk=",
+    "client": "UNIV_57",
+    "x-api-key": "NZfRsR00F94yFYq3kdQSl2pA38ywzFzGss4BaVye",
+    "device-datetime": "2022-02-17T03:36:19Z",
+    "territory": "XX",
   },
 };
 
@@ -249,10 +249,11 @@ function createMarker(place) {
       shouldFocus: false,
     });
   });
-}
+};
 
-function showtime(response) {
+function showtime() {
   $.ajax(settings).done(function (response) {
+   console.log(response)
     $("#movie-info-display").empty();
     $("#movie-info-container").append(
       $("<div>")
@@ -260,11 +261,6 @@ function showtime(response) {
         .attr("id", "movie-info-display")
     );
     for (let i = 0; i <= 3; i++) {
-      //   console.log(response.films[i].film_id);
-      //   let posterEl = response.films[i].film_id;
-      //   let posters = `https://api-gate2.movieglu.com/images/?film_id=266617/`;
-      //   console.log(posters);
-
       $("#movie-info-display").append(
         $("<div>").addClass("column").attr("id", `column${i}`)
       );
@@ -279,18 +275,19 @@ function showtime(response) {
           .attr("id", `card-title${i}`)
       );
 
-      //   $(`#card${i}`).append(
-      //     $(`<img src=${posters}></img>`)
-      //       .addClass("card-header-title title")
-      //       .attr("id", `card-title${i}`)
-      //   );
+        $(`#card${i}`).append(
+          $(`<img src=${response.films[i].images.poster[1].medium.film_image}></img>`)
+            .addClass("card-header-title title")
+            .attr("id", `card-title${i}`)
+        );
 
       $(`#card${i}`).append(
-        $("<div>").addClass("card-content").attr("id", `card-content${i}`)
-      );
-    }
+        $("<div>").addClass("card-content")
+        .attr("id", `card-content${i}`)
+        );
+    };
   });
-}
+};
 
 var deleteWarning = function () {
   $("#warning").remove();
