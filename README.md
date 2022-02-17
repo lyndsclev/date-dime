@@ -25,4 +25,4 @@ Date Dime is a quick and easy way to find a restaurant that fits your budget and
 ## Project Requirements
 
 - To be removed before project submission
-  ![Screenshot](/assets/images/example-screencap.png)
+  ![Screenshot](./assets/images/example-screencap.png)
