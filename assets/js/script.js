@@ -1,8 +1,8 @@
-// define storage input array 
-var storeInputArr; 
-
+// define storage input array
+var storeInputArr;
+ 
 var savedSearchEl = document.querySelector("#savedSearchEl");
-
+ 
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
  
@@ -116,7 +116,7 @@ function geocode(request) {
       var priceLevel = document.getElementById("price-input").value;
       var ask = {
         location: results[0].geometry.location,
-        radius: "5000",
+        radius: "20000",
         type: ["restaurant"],
         minPriceLevel: priceLevel,
         maxPriceLevel: priceLevel + 0.5,
@@ -242,7 +242,7 @@ function createMarker(place) {
           } />`
         : ""
     }
-      <div><a href=${place.website} target="_blank" rel="noreferrer">${
+      <div><a href=${place.website} target="_blank">${
     place.name
   }</a></div>
     </div>`;
@@ -296,19 +296,15 @@ function showtime() {
  
       $(`#card${i}`).append(
         $(`<h2>${response.films[i].film_name}</h2>`)
-          .addClass("card-header-title title")
+          .addClass("card-header-title title is-centered")
           .attr("id", `card-title${i}`)
       );
  
         $(`#card${i}`).append(
           $(`<img src=${response.films[i].images.poster[1].medium.film_image}></img>`)
-            .addClass("card-header-title title")
-            .attr("id", `card-title${i}`)
-        );
- 
-      $(`#card${i}`).append(
-        $("<div>").addClass("card-content")
-        .attr("id", `card-content${i}`)
+            .addClass("card-image card-content")
+            .attr("id", `card-img${i}`)
+            .attr("alt", `Poster of ${response.films[i].film_name}`)
         );
     };
   });
@@ -317,56 +313,54 @@ function showtime() {
 var deleteWarning = function () {
   $("#warning").remove();
 };
-
+ 
 function storeInput () {
-
+ 
     var dime = priceInput.value;
-    var zip = zipInput.value; 
-
+    var zip = zipInput.value;
+ 
     storeInputArr = JSON.parse(window.localStorage.getItem("storeInputArr")) || [];
-
+ 
     var newInput = {
-        dime: dime, 
+        dime: dime,
         zip: zip
     };
-
+ 
     storeInputArr.push(newInput);
-
+ 
     window.localStorage.setItem("storeInputArr", JSON.stringify(storeInputArr));
 };
-
-
+ 
+ 
 // launch saved search modal
-
+ 
 function launchSavedModal () {
-    $("li").remove()
-    // activate modal 
+    $("li").remove();
+    // activate modal
     $("#saveModal").addClass("is-active");
-    
+   
     // get existing stored
     storeInputArr = JSON.parse(window.localStorage.getItem("storeInputArr"));
-
-    // populate modal with search 
+ 
+    // populate modal with search
     for (var i = 0; i <  storeInputArr.length; i++) {
         var savedSearchItem = document.createElement("li");
         savedSearchItem.textContent =  "Your Dime Level: " + storeInputArr[i].dime + " You're Zip: " + storeInputArr[i].zip;
         savedSearchEl.appendChild(savedSearchItem);
         }
 };
-
+ 
 function closeSavedModal () {
     $("#saveModal").removeClass("is-active");
 };
-
-
-
-// run storeInput function 
+ 
+// run storeInput function
 $("#search-form").on("submit", storeInput);
-
-// launch modal 
+ 
+// launch modal
 $("#showSaveBtn").on("click", launchSavedModal);
-
-// remove modal 
+ 
+// remove modal
 $("#sDelBtn").on("click", closeSavedModal);
-
+ 
 $("#search-form").on("submit", formSubmitHandler);
