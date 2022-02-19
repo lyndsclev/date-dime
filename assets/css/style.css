@@ -2,7 +2,7 @@
   --primary: #485fc7;
   --secondary: #48c78e;
 }
- 
+
 .dollar-btn {
   background: none;
   color: inherit;
@@ -12,33 +12,33 @@
   cursor: pointer;
   outline: inherit;
 }
- 
+
 .dollar-btn-hover:hover {
   border: 4px var(--secondary) solid;
   border-radius: 50%;
 }
- 
+
 .dollar-btn-clicked {
   border: 4px var(--secondary) solid;
   border-radius: 50%;
 }
- 
+
 #price-input {
   display: none;
 }
- 
+
 .warning {
   position: fixed;
   top: 0;
-  opacity: 0.80;
+  opacity: 0.8;
   width: 100%;
   text-align: center;
 }
- 
+
 .map {
   height: 25em;
 }
- 
+
 .card {
   background-color: gainsboro;
   opacity: 0.87;
@@ -52,18 +52,18 @@
   margin: 0 auto;
 }
 
-.is-128x128{
+.is-128x128 {
   margin-right: 7px;
 }
 
 .display-none {
   display: none;
 }
- 
+
 .open {
   color: var(--secondary);
 }
- 
+
 .closed {
   color: red;
-}  
+}
