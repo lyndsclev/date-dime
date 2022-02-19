@@ -355,8 +355,15 @@ function closeSavedModal() {
   $("#saveModal").removeClass("is-active");
 }
 
+//clear search function and modal
 function clearSearch() {
   localStorage.clear();
+}
+function showDeleteModal() {
+  $("#deleteModal").addClass("is-active");
+}
+function closeDeleteModal() {
+  $("#deleteModal").removeClass("is-active");
 }
 
 // run storeInput function
@@ -369,5 +376,10 @@ $("#showSaveBtn").on("click", launchSavedModal);
 $("#sDelBtn").on("click", closeSavedModal);
 
 $("#search-form").on("submit", formSubmitHandler);
+
+//clear search and modals
+$("#dltSrchBtn").on("click", showDeleteModal);
+
+$("#closeDelBtn").on("click", closeDeleteModal);
 
 $("#dltSrchBtn").on("click", clearSearch);
