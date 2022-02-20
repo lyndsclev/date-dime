@@ -22,7 +22,6 @@ Date Dime is a quick and easy way to find a restaurant that fits your budget and
 - [Sam Clark](https://github.com/Sam-Clark1)
 - [Jacob Ambrose](https://github.com/jambrose0)
 
-## Project Requirements
+## Preview
 
-- To be removed before project submission
-  ![Screenshot](./assets/images/example-screencap.png)
+  ![](./assets/images/demo.png)
