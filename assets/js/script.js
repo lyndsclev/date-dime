@@ -6,6 +6,7 @@ var savedSearchEl = document.querySelector("#savedSearchEl");
 var priceInput = document.querySelector("#price-input");
 var zipInput = document.querySelector("#zip-input");
 
+// MovieGlu API Credentials
 var settings = {
   url: "https://api-gate2.movieglu.com/filmsNowShowing/?n=4",
   method: "GET",
@@ -20,6 +21,7 @@ var settings = {
   },
 };
 
+// Variables used by Google Maps APIs
 var map;
 var geocoder;
 var service;
@@ -29,6 +31,8 @@ var marker;
 var markersArray = [];
 var index = 0;
 
+// Sets desired price by giving a hidden input a value that can be used by Google Maps API.
+// Adds colored border to buttons that stay when clicked to indicate what you have selected.
 var priceLevelHandler = function (price) {
   if (price == 1) {
     priceInput.value = "";
@@ -58,9 +62,10 @@ var priceLevelHandler = function (price) {
     $("#dollarbtn2").removeClass("dollar-btn-clicked");
     $("#dollarbtn3").removeClass("dollar-btn-clicked");
     $("#dollarbtn4").addClass("dollar-btn-clicked");
-  }
+  };
 };
 
+// Handles input of form. Sets desired price level and sends inputed location to Google geocoder api
 var formSubmitHandler = function (event) {
   event.preventDefault();
   var priceLevel = priceInput.value.trim();
@@ -79,9 +84,13 @@ var formSubmitHandler = function (event) {
 
     $("#eat-info-display").remove();
 
+    // Displays map
     $("#map-display").removeClass("display-none");
 
+    // sends inputed location to geocode function
     geocode({ address: zipcode });
+
+    // Calls function to generate movies
     showtime();
   } else {
     $("#warning").remove();
@@ -95,9 +104,10 @@ var formSubmitHandler = function (event) {
     $("#warning").append(
       $("<button>").addClass("delete").attr("onclick", "deleteWarning()")
     );
-  }
+  };
 };
 
+// Function called when site it loaded by call back in the https  
 function initMap() {
   geocoder = new google.maps.Geocoder();
   var location = new google.maps.LatLng(-34.397, 150.644);
@@ -105,14 +115,16 @@ function initMap() {
     center: location,
     zoom: 12,
   });
-}
+};
 
+// Uses Google Maps places library to search nearby inputed location. Sends that info to callback function
 function geocode(request) {
   geocoder
     .geocode(request)
     .then((result) => {
       const { results } = result;
       var priceLevel = document.getElementById("price-input").value;
+      // variable used to indicate desired info
       var ask = {
         location: results[0].geometry.location,
         radius: "20000",
@@ -120,8 +132,10 @@ function geocode(request) {
         minPriceLevel: priceLevel,
         maxPriceLevel: priceLevel + 0.5,
       };
+      // centers map on inputed location
       map.setCenter(results[0].geometry.location);
       service = new google.maps.places.PlacesService(map);
+      // used nearbySearch method to get places around inputed location based on desired info in 'ask' variable above
       service.nearbySearch(ask, callback);
       return results;
     })
@@ -139,16 +153,21 @@ function geocode(request) {
       );
       console.log("Geocode was not successful for the following reason: " + e);
     });
-}
+};
 
+// Gets more details from nearby search of location. Sends that info to getDetails function
 function callback(results, status) {
   var services2 = new google.maps.places.PlacesService(map);
+
   $("#eat-info-container").append(
     $("<div>").addClass("columns").attr("id", "eat-info-display")
   );
+
   $("#eat-title").text("EAT");
+
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 1; i < 5; i++) {
+      // variable used to indicate desired info
       var placeDetails = {
         placeId: `${results[i].place_id}`,
         fields: [
@@ -164,6 +183,7 @@ function callback(results, status) {
         ],
       };
       var services2 = new google.maps.places.PlacesService(map);
+      // used getDetails method to get more info
       services2.getDetails(placeDetails, getDetails);
     }
   } else {
@@ -180,8 +200,9 @@ function callback(results, status) {
     );
     console.log("failed: " + status);
   }
-}
+};
 
+// Dynamically generates cards displaying data generated from Googles getDetails method
 var getDetails = function (placeDetails) {
   index++;
 
@@ -223,10 +244,12 @@ var getDetails = function (placeDetails) {
 
   if (index == 4) {
     index = 0;
-  }
+  };
 };
 
+// Places markers on map based on info generated from Googles getDetails method
 function createMarker(place) {
+  // Checks if markers are on map already. If they are, calls function below to remove them
   if (markersArray.length > 3) {
     setMapOnAll(null);
   }
@@ -263,15 +286,17 @@ function createMarker(place) {
       shouldFocus: false,
     });
   });
-}
+};
 
+// Removes markers from map and empties markers array when null is sent to this function
 function setMapOnAll(map) {
   for (let i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(map);
   }
   markersArray = [];
-}
+};
 
+// Generates cards containing info on movies called from MovieGlu API
 function showtime() {
   $.ajax(settings).done(function (response) {
     $("#watch-title").text("WATCH");
@@ -304,14 +329,16 @@ function showtime() {
           .attr("id", `card-img${i}`)
           .attr("alt", `Poster of ${response.films[i].film_name}`)
       );
-    }
+    };
   });
-}
+};
 
+// Deletes warning modal when button on it is pressed
 var deleteWarning = function () {
   $("#warning").remove();
 };
 
+// Stores search info
 function storeInput() {
   var dime = priceInput.value;
   var zip = zipInput.value;
@@ -327,10 +354,9 @@ function storeInput() {
   storeInputArr.push(newInput);
 
   window.localStorage.setItem("storeInputArr", JSON.stringify(storeInputArr));
-}
+};
 
 // launch saved search modal
-
 function launchSavedModal() {
   $("li").remove();
   // activate modal
@@ -348,23 +374,25 @@ function launchSavedModal() {
       " You're Zip: " +
       storeInputArr[i].zip;
     savedSearchEl.appendChild(savedSearchItem);
-  }
-}
+  };
+};
 
 function closeSavedModal() {
   $("#saveModal").removeClass("is-active");
-}
+};
 
 //clear search function and modal
 function clearSearch() {
   localStorage.clear();
-}
+};
+
 function showDeleteModal() {
   $("#deleteModal").addClass("is-active");
-}
+};
+
 function closeDeleteModal() {
   $("#deleteModal").removeClass("is-active");
-}
+};
 
 // run storeInput function
 $("#search-form").on("submit", storeInput);
@@ -380,6 +408,8 @@ $("#search-form").on("submit", formSubmitHandler);
 //clear search and modals
 $("#dltSrchBtn").on("click", showDeleteModal);
 
+// closes search history deletion confirmation modal
 $("#closeDelBtn").on("click", closeDeleteModal);
 
+// clears local storage
 $("#dltSrchBtn").on("click", clearSearch);
