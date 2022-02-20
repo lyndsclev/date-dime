@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS links -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Date Dime</title>
+  </head>
+  <body>
+
+    <!-- header -->
+ 
+    <section class="section">
+      <h1 class="title is-2 is-spaced">DATE DIME</h1>
+      <h2 class="subtitle">
+        Get ready for your upcoming date night! Below, choose your budget level (your "dime"!) and enter your zipcode for a list of restaurants near you that meet your criteria. We also throw in some movies currently showing in theaters for an idea of what to do after dinner.  
+      </h2>
+    </section>
+ 
+    <!-- hero with zip code, search button, and price filter  -->
+    <section class="hero is-medium is-link">
+      <div class="hero-body">
+     
+         <!-- Dollar bill divs -->
+ 
+              <form id="search-form" class="level">
+                <div class="level-item">
+                  <div class="columns is-mobile is-variable is-1">
+ 
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('1')">
+                      <figure class="image is-64x64">
+                        <img id="dollarbtn1" class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-1.svg">
+                      </figure>
+                    </button>
+                    </div>
+ 
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('2')">
+                      <figure class="image is-64x64">
+                        <img id="dollarbtn2" class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-2.svg">
+                      </figure>
+                    </button>
+                    </div>
+ 
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('3')">
+                      <figure class="image is-64x64">
+                        <img id="dollarbtn3" class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-3.svg">
+                      </figure>
+                    </button>
+                    </div>
+ 
+                    <div class="column">
+                      <button type="button" class="dollar-btn" onclick="priceLevelHandler('4')">
+                      <figure class="image is-64x64">
+                        <img id="dollarbtn4" class="is-rounded dollar-btn-hover" src="assets/images/dollar-sign-icon-4.svg">
+                      </figure>
+                    </button>
+                    </div>
+ 
+                  </div>
+                </div>
+               
+ 
+                <div class="level-item">
+                  <input id="zip-input" class="normal input is-medium is-primary is-rounded" type="text" placeholder="Zip Code">
+                </div>
+ 
+                <div class="level-item">
+                  <button type="submit" id="submit-btn" class="button is-success mx-3">SEARCH</button>
+                  <button type="button" id="showSaveBtn" class="button is-success is-light">SHOW SAVED SEARCH</button>
+                  <button type="button" id="dltSrchBtn" class="button is-success is-dark mx-3">CLEAR SEARCH</button>
+                </div>
+ 
+                <input type="text" id="price-input">
+              </form>
+               
+        </div>
+   
+      </div>
+    </section>
+ 
+    <!-- Show Saved Search Modal -->
+    <div id="saveModal" class = "modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Your Previous Search</p>
+          <button id="sDelBtn" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <ul id="savedSearchEl"></ul>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+      </div>
+    </div>
+
+<!-- Clear Search Modal -->
+<div id="deleteModal" class = "modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+    <h3 class="modal-card-title has-text-centered"> Your Previous Search</h3>
+       <button id="closeDelBtn" class="delete is-pulled-right" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <p class="modal-card-title has-text-centered">Searches have been cleared</p>
+      </section>
+    <footer class="modal-card-foot">
+    </footer>
+  </div>
+</div>
+
+
+ 
+    <!-- Eat Section -->
+    <section class="section">
+      <h1 id="eat-title" class="title has-text-centered is-underlined"></h1>
+ 
+      <div class="columns is-centered">
+        <div id="map-display" class="column is-10 display-none">
+          <div class="card">
+            <div class="card-content">
+              <div id="map" class="map is-centered block">
+ 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div id="eat-info-container" class="block"></div>
+     
+    <!-- Watch Section -->
+    <section class="section">
+      <h1 id="watch-title" class="title has-text-centered is-underlined"></h1>
+ 
+      <div class="columns is-centered">
+        <div id="movie-info-container" class="block"></div>
+    </section>
+ 
+    <!-- footer -->
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Date Dime</strong> by frontpage freebirds.
+        </p>
+      </div>
+    </footer>
+ 
+    <!-- jquery link -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <!-- Google Maps API -->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places&callback=initMap">
+</script>
+   
+  <!-- our js link -->
+    <script src="./assets/js/script.js"></script>
+   
+  </body>
+</html>
