@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+
+    <!-- CSS links -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Date Dime</title>
   </head>
   <body>
+
     <!-- header -->
  
     <section class="section">
@@ -21,11 +22,11 @@
       </h2>
     </section>
  
-    <!-- hero= zip code, search button, and price filter  -->
+    <!-- hero with zip code, search button, and price filter  -->
     <section class="hero is-medium is-link">
       <div class="hero-body">
      
-         <!-- Dollar bill divs might need to come out, or be seperated by ids & classes -->
+         <!-- Dollar bill divs -->
  
               <form id="search-form" class="level">
                 <div class="level-item">
@@ -85,7 +86,7 @@
       </div>
     </section>
  
-    <!-- Previous Search Modal -->
+    <!-- Show Saved Search Modal -->
     <div id="saveModal" class = "modal">
       <div class="modal-background"></div>
       <div class="modal-card">
@@ -155,16 +156,14 @@
     </footer>
  
     <!-- jquery link -->
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
     <!-- Google Maps API -->
     <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj5Q8hSDIxplfuYU2-cTRunXFGX_zLm8M&libraries=places&callback=initMap">
 </script>
-    <!-- our js link -->
+   
+  <!-- our js link -->
     <script src="./assets/js/script.js"></script>
    
   </body>
